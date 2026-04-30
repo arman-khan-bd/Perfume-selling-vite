@@ -1,0 +1,6 @@
+{
+  "name": "Attar & Oud | Luxury Perfumes",
+  "description": "A premium perfume boutique specializing in authentic fragrance oils, oud, and designer perfumes in Bangladesh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["ecommerce", "shopping-cart", "product-filters"]
+}
