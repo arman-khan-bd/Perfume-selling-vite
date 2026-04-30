@@ -64,9 +64,11 @@ const Navbar = () => {
           <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
             <Search className="h-5 w-5 text-white/60" />
           </Button>
-          <div className="hidden sm:inline-flex h-8 w-8 rounded-full bg-white/5 border border-white/10 items-center justify-center">
-            <User className="h-4 w-4 text-white/60" />
-          </div>
+          <Link to="/profile">
+            <div className="flex h-8 w-8 rounded-full bg-white/5 border border-white/10 items-center justify-center hover:bg-white/10 transition-colors">
+              <User className="h-4 w-4 text-white/60" />
+            </div>
+          </Link>
           <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative group">
               <ShoppingBag className="h-5 w-5 text-white/60 group-hover:text-brand-gold transition-colors" />

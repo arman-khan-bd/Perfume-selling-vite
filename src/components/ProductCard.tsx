@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       whileHover={{ y: -8 }}
       className="group bg-[#111111] border border-white/5 overflow-hidden transition-all duration-500 hover:border-brand-gold/30 rounded-2xl"
     >
-      <div className="relative aspect-[4/5] overflow-hidden">
+      <div className="relative aspect-square overflow-hidden">
         <img
           src={product.images[0]}
           alt={product.name}

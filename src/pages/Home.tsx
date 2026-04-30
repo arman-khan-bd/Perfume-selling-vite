@@ -5,11 +5,30 @@ import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { motion } from 'motion/react';
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+const SCENT_NOTES = [
+  { name: 'আউদ', img: 'https://images.unsplash.com/photo-1616984748474-23707840134e?q=80&w=100' },
+  { name: 'মাস্ক', img: 'https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=100' },
+  { name: 'গোলাপ', img: 'https://images.unsplash.com/photo-1512568433530-57c70177b223?q=80&w=100' },
+  { name: 'জাফরান', img: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=100' },
+  { name: 'চন্দন', img: 'https://images.unsplash.com/photo-1600857062241-98e5dba7f214?q=80&w=100' },
+  { name: 'ভ্যানিলা', img: 'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?q=80&w=100' },
+  { name: 'এলাচ', img: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?q=80&w=100' },
+  { name: 'বার্গামট', img: 'https://images.unsplash.com/photo-1591189814407-772428666579?q=80&w=100' },
+  { name: 'পাচৌলি', img: 'https://images.unsplash.com/photo-1628151515904-862df401839d?q=80&w=100' },
+];
 
 const Home = () => {
   const featured = PERFUMES.slice(0, 4);
@@ -19,7 +38,15 @@ const Home = () => {
     { name: 'আউদ', img: 'https://images.unsplash.com/photo-1616984748474-23707840134e?q=80&w=800', desc: 'তরল সোনা' },
     { name: 'মাস্ক', img: 'https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=800', desc: 'বিশুদ্ধ পরিশীলন' },
     { name: 'ফ্লোরাল', img: 'https://images.unsplash.com/photo-1512568433530-57c70177b223?q=80&w=800', desc: 'মার্জিত আভিজাত্য' },
-    { name: 'ফ্রেশ', img: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=800', desc: 'প্রাণবন্ত শক্তি' }
+    { name: 'ফ্রেশ', img: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=800', desc: 'প্রাণবন্ত শক্তি' },
+    { name: 'ওরিয়েন্টাল', img: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=800', desc: 'উষ্ণ মাধুর্য' },
+    { name: 'উডি', img: 'https://images.unsplash.com/photo-1600857062241-98e5dba7f214?q=80&w=800', desc: 'প্রাকৃতিক গভীরতা' },
+    { name: 'স্পাইসি', img: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?q=80&w=800', desc: 'উষ্ণ মশলা' },
+    { name: 'অ্যাকুয়াটিক', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800', desc: 'সমুদ্রের সতেজতা' },
+    { name: 'সাইট্রাস', img: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=800', desc: 'লেবুর সজীবতা' },
+    { name: 'অ্যাম্বার', img: 'https://images.unsplash.com/photo-1595367189154-207011d0442c?q=80&w=800', desc: 'সোনালী আভা' },
+    { name: 'লেদার', img: 'https://images.unsplash.com/photo-1524292332409-301285f1f0f0?q=80&w=800', desc: 'সাহসী আভিজাত্য' },
+    { name: 'সবুজ', img: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=800', desc: 'প্রকৃতির ছোঁয়া' }
   ];
 
   return (
@@ -86,30 +113,48 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {categories.map((cat, idx) => (
-              <motion.div
-                key={cat.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group relative h-[250px] md:h-[400px] overflow-hidden rounded-xl md:rounded-2xl border border-white/5 cursor-pointer bg-brand-dark"
-              >
-                <img 
-                  src={cat.img} 
-                  alt={cat.name} 
-                  className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 md:bottom-10 left-4 md:left-10 space-y-1 md:space-y-2">
-                  <span className="text-brand-gold text-[7px] md:text-[10px] font-bold uppercase tracking-[0.3em] opacity-60">{cat.desc}</span>
-                  <h3 className="text-xl md:text-3xl text-white font-serif font-bold italic">{cat.name}</h3>
-                </div>
-                <Link to={`/perfumes?category=${cat.name}`} className="absolute inset-0 z-10" />
-              </motion.div>
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {Array.from({ length: Math.ceil(categories.length / 2) }).map((_, i) => (
+                <CarouselItem key={i} className="pl-4 basis-[210px] md:basis-[220px]">
+                  <div className="flex flex-col gap-3">
+                    {categories.slice(i * 2, i * 2 + 2).map((cat, idx) => (
+                      <motion.div
+                        key={cat.name}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="group relative w-[200px] h-[40px] overflow-hidden rounded-xl border border-white/5 cursor-pointer bg-brand-dark"
+                      >
+                        <img 
+                          src={cat.img} 
+                          alt={cat.name} 
+                          className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/20 to-transparent"></div>
+                        <div className="absolute inset-y-0 left-4 flex flex-col justify-center">
+                          <span className="text-brand-gold text-[7px] font-bold uppercase tracking-[0.2em] opacity-60 leading-none mb-0.5">{cat.desc}</span>
+                          <h3 className="text-xs text-white font-serif font-bold italic leading-none">{cat.name}</h3>
+                        </div>
+                        <Link to={`/perfumes?category=${cat.name}`} className="absolute inset-0 z-10" />
+                      </motion.div>
+                    ))}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex gap-2 mt-10 justify-center">
+              <CarouselPrevious className="static translate-y-0 h-10 w-10 bg-white/5 border-white/10 text-white hover:bg-brand-gold hover:text-brand-black" />
+              <CarouselNext className="static translate-y-0 h-10 w-10 bg-white/5 border-white/10 text-white hover:bg-brand-gold hover:text-brand-black" />
+            </div>
+          </Carousel>
         </div>
       </section>
 
@@ -169,20 +214,44 @@ const Home = () => {
                 প্রতিটি পারফিউম তিন স্তরের নোট দিয়ে গঠিত, যা আপনার ত্বকে সময়ের সাথে সাথে বিকশিত হয়ে একটি অনন্য সিম্ফনি তৈরি করে।
               </p>
               
-              <div className="space-y-4 md:space-y-6">
-                {[
-                  { title: "টপ নোটস", desc: "প্রাথমিক প্রভাব, ১৫-৩০ মিনিট স্থায়ী হয়। সাধারণত লেবু বা হালকা ভেষজ জাতীয় হয়ে থাকে।", color: "bg-brand-gold" },
-                  { title: "হার্ট নোটস", desc: "সুগন্ধির মূল বৈশিষ্ট্য, ২-৪ ঘণ্টা স্থায়ী হয়। প্রায়ই ফ্লোরাল, মশলা বা ফলের ঘ্রাণ থাকে।", color: "bg-brand-gold/60" },
-                  { title: "বেজ নোটস", desc: "স্থায়ী ভিত্তি, ৮+ ঘন্টা থাকে। গভীর কাঠ, মাস্ক বা রেজিনের ঘ্রাণ পাওয়া যায়।", color: "bg-brand-gold/30" }
-                ].map((note, i) => (
-                  <div key={note.title} className="flex gap-4 md:gap-6 items-start">
-                    <div className={`${note.color} h-10 w-10 md:h-12 md:w-12 shrink-0 rounded-full flex items-center justify-center text-brand-black font-bold text-sm md:text-base`}>{i+1}</div>
-                    <div>
-                      <h4 className="text-lg md:text-xl font-serif font-bold mb-1 text-white">{note.title}</h4>
-                      <p className="text-xs md:text-base text-white/40">{note.desc}</p>
-                    </div>
+              <div className="pt-4">
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full max-w-sm"
+                >
+                  <CarouselContent>
+                    {Array.from({ length: Math.ceil(SCENT_NOTES.length / 3) }).map((_, i) => (
+                      <CarouselItem key={i} className="basis-1/2 md:basis-1/3">
+                        <div className="flex flex-col gap-3">
+                          {SCENT_NOTES.slice(i * 3, i * 3 + 3).map((note) => (
+                            <div 
+                              key={note.name}
+                              className="w-[100px] h-[30px] flex items-center gap-2 bg-white/5 border border-white/10 rounded-md overflow-hidden hover:bg-white/10 transition-colors group"
+                            >
+                              <div className="w-8 h-full shrink-0 overflow-hidden">
+                                <img 
+                                  src={note.img} 
+                                  alt={note.name} 
+                                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                                />
+                              </div>
+                              <span className="text-[9px] font-bold text-white/70 group-hover:text-brand-gold truncate pr-2">
+                                {note.name}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <div className="flex gap-2 mt-6">
+                    <CarouselPrevious className="static translate-y-0 h-8 w-8 bg-white/5 border-white/10 text-white hover:bg-brand-gold hover:text-brand-black" />
+                    <CarouselNext className="static translate-y-0 h-8 w-8 bg-white/5 border-white/10 text-white hover:bg-brand-gold hover:text-brand-black" />
                   </div>
-                ))}
+                </Carousel>
               </div>
             </motion.div>
             <div className="relative">

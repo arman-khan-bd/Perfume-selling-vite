@@ -8,16 +8,25 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'motion/react';
+
+const CATEGORY_OPTIONS = ['আউদ', 'মাস্ক', 'ফ্লোরাল', 'ফ্রেশ', 'ওরিয়েন্টাল', 'উডি', 'স্পাইসি', 'অ্যাকুয়াটিক', 'সাইট্রাস', 'অ্যাম্বার', 'লেদার', 'সবুজ'];
 
 const AllPerfumes = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedNotes, setSelectedNotes] = useState<string[]>([]);
 
-  const categoryOptions = ['আউদ', 'মাস্ক', 'ফ্লোরাল', 'ফ্রেশ', 'ওরিয়েন্টাল'];
+  const categoryOptions = CATEGORY_OPTIONS;
+
+  const noteOptions = useMemo(() => {
+    const notes = new Set<string>();
+    PERFUMES.forEach(p => p.notes.forEach(n => notes.add(n.name)));
+    return Array.from(notes);
+  }, []);
 
   // Sync with URL params
   useEffect(() => {
@@ -33,9 +42,10 @@ const AllPerfumes = () => {
                             p.brand.toLowerCase().includes(search.toLowerCase());
       const matchesPrice = p.price >= priceRange[0] && p.price <= priceRange[1];
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category);
-      return matchesSearch && matchesPrice && matchesCategory;
+      const matchesNotes = selectedNotes.length === 0 || p.notes.some(n => selectedNotes.includes(n.name));
+      return matchesSearch && matchesPrice && matchesCategory && matchesNotes;
     });
-  }, [search, priceRange, selectedCategories]);
+  }, [search, priceRange, selectedCategories, selectedNotes]);
 
   const toggleCategory = (cat: string) => {
     setSelectedCategories(prev => 
@@ -43,10 +53,17 @@ const AllPerfumes = () => {
     );
   };
 
+  const toggleNote = (note: string) => {
+    setSelectedNotes(prev => 
+      prev.includes(note) ? prev.filter(n => n !== note) : [...prev, note]
+    );
+  };
+
   const clearFilters = () => {
     setSearch('');
     setPriceRange([0, 10000]);
     setSelectedCategories([]);
+    setSelectedNotes([]);
     setSearchParams({});
   };
 
@@ -119,6 +136,28 @@ const AllPerfumes = () => {
                 </div>
             </div>
 
+            <div className="space-y-6">
+              <h3 className="text-brand-gold text-[10px] font-bold uppercase tracking-[0.4em]">সুগন্ধি নোট</h3>
+              <div className="grid grid-cols-1 gap-3 max-h-60 overflow-y-auto pr-2 scrollbar-hide">
+                {noteOptions.map(note => (
+                  <div key={note} className="flex items-center space-x-3 cursor-pointer group">
+                    <Checkbox 
+                        id={`note-${note}`} 
+                        checked={selectedNotes.includes(note)} 
+                        onCheckedChange={() => toggleNote(note)}
+                        className="bg-transparent border-white/20 data-[state=checked]:bg-brand-gold data-[state=checked]:border-brand-gold"
+                    />
+                    <label 
+                      htmlFor={`note-${note}`} 
+                      className="text-sm font-light text-white/40 group-hover:text-brand-gold transition-colors cursor-pointer"
+                    >
+                      {note}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <Button 
               variant="outline" 
               className="w-full border-white/10 text-white/40 hover:bg-white/5 hover:text-white rounded-full text-[10px] uppercase font-bold tracking-widest py-6"
@@ -129,7 +168,7 @@ const AllPerfumes = () => {
           </aside>
 
           {/* Main Content Area */}
-          <main className="flex-1">
+          <main className="flex-1 space-y-12">
             {/* Mobile Filter Toggle */}
             <div className="lg:hidden flex items-center justify-between mb-12 bg-white/5 p-4 rounded-2xl border border-white/5">
               <div className="flex items-center gap-3">
@@ -174,6 +213,23 @@ const AllPerfumes = () => {
                             </div>
 
                             <div className="space-y-4">
+                                <h4 className="text-[10px] uppercase text-white/30 tracking-widest font-bold">সুগন্ধি নোট</h4>
+                                <div className="grid grid-cols-2 gap-4 max-h-40 overflow-y-auto pr-2 scrollbar-hide">
+                                    {noteOptions.map(note => (
+                                        <div key={note} className="flex items-center space-x-3">
+                                            <Checkbox 
+                                                id={`mob-note-${note}`} 
+                                                checked={selectedNotes.includes(note)} 
+                                                onCheckedChange={() => toggleNote(note)}
+                                                className="border-white/20"
+                                            />
+                                            <label htmlFor={`mob-note-${note}`} className="text-sm font-light text-white/60">{note}</label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
                                 <h4 className="text-[10px] uppercase text-white/30 tracking-widest font-bold">মূল্য ফিল্টার</h4>
                                 <Slider 
                                     defaultValue={[0, 10000]} 
@@ -188,9 +244,13 @@ const AllPerfumes = () => {
                                 </div>
                             </div>
 
-                            <Button className="w-full bg-brand-gold text-brand-black font-bold rounded-full py-7 text-[10px] uppercase tracking-[0.2em]" onClick={() => {}}>
-                                ফিল্টার প্রয়োগ করুন
-                            </Button>
+                             <SheetClose 
+                                render={
+                                  <Button className="w-full bg-brand-gold text-brand-black font-bold rounded-full py-7 text-[10px] uppercase tracking-[0.2em]">
+                                      ফিল্টার প্রয়োগ করুন
+                                  </Button>
+                                }
+                             />
                         </div>
                     </div>
                 </SheetContent>
