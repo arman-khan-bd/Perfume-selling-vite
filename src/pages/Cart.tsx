@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { Button } from '../components/ui/button';
+import { Button } from '@/components/ui/button';
 import { 
     Trash2, 
     Minus, 
@@ -10,7 +10,7 @@ import {
     Trash,
     ChevronLeft
 } from 'lucide-react';
-import { Separator } from '../components/ui/separator';
+import { Separator } from '@/components/ui/separator';
 import { motion, AnimatePresence } from 'motion/react';
 
 const Cart = () => {

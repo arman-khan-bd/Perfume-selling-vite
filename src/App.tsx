@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { CartProvider } from './context/CartContext';
-import { Toaster } from './components/ui/sonner';
+import { Toaster } from '@/components/ui/sonner';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';

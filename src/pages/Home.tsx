@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Quote, ChevronRight, Search } from 'lucide-react';
 import { PERFUMES } from '../data/perfumes';
-import ProductCard from '../components/ProductCard';
-import { Button } from '../components/ui/button';
+import ProductCard from '@/components/ProductCard';
+import { Button } from '@/components/ui/button';
 import { motion } from 'motion/react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../components/ui/accordion";
+} from "@/components/ui/accordion";
 
 const Home = () => {
   const featured = PERFUMES.slice(0, 4);

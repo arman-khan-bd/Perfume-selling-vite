@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, Eye, Star } from 'lucide-react';
 import { Perfume } from '../types';
 import { useCart } from '../context/CartContext';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { motion } from 'motion/react';
 
 interface ProductCardProps {
@@ -38,9 +38,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Quick Actions Overlay - Visible on mobile by default, hidden on hover for desktop */}
-        <div className="absolute inset-x-0 bottom-0 p-3 md:p-6 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-brand-black/90 to-transparent">
+        <div className="absolute inset-x-0 bottom-0 p-2 md:p-6 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-brand-black via-brand-black/80 to-transparent">
           <Button 
-            className="w-full bg-white text-brand-black hover:bg-brand-gold hover:text-brand-black font-bold text-[8px] md:text-[10px] uppercase tracking-widest py-4 md:py-6 h-auto rounded-full transition-all"
+            className="w-full bg-white text-brand-black hover:bg-brand-gold hover:text-brand-black font-bold text-[7px] md:text-[10px] uppercase tracking-widest py-3 md:py-6 h-auto rounded-full transition-all"
             onClick={() => addToCart(product)}
           >
             ব্যাগে যোগ করুন

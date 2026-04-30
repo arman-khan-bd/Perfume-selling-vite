@@ -3,9 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { PERFUMES } from '../data/perfumes';
 import { useCart } from '../context/CartContext';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
-import ProductCard from '../components/ProductCard';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import ProductCard from '@/components/ProductCard';
 import { 
     Star, 
     Minus, 
@@ -20,7 +20,7 @@ import {
     ChevronRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Separator } from '../components/ui/separator';
+import { Separator } from '@/components/ui/separator';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -134,7 +134,7 @@ const ProductDetail = () => {
                 </div>
                 
                 <Button 
-                    className="flex-1 w-full bg-white text-brand-black hover:bg-brand-gold hover:text-brand-black font-bold text-[9px] md:text-[10px] uppercase tracking-widest py-6 md:py-8 h-auto rounded-full shadow-2xl transition-all"
+                    className="flex-1 w-full bg-white text-brand-black hover:bg-brand-gold hover:text-brand-black font-bold text-[9px] md:text-[10px] uppercase tracking-widest py-5 md:py-8 h-auto rounded-full shadow-2xl transition-all"
                     onClick={() => addToCart(product, quantity)}
                 >
                   সুগন্ধি সংগ্রহ করুন
